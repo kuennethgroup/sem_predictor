@@ -213,13 +213,15 @@ class SEMPredictor:
             st.error(f"Fehler bei der Verarbeitung von {image_file.name}: {e}")
             return None
         return results
-
+    
 @st.cache_resource
 def load_model_and_dependencies(model_name, _config):
     try:
-        model_path = _config["model_path"]
-        params_path = _config["params_path"]
-        scaler_path = _config["scaler_path"]
+        # Konvertiere Path-Objekte zu Strings für Dateioperationen
+        model_path = str(_config["model_path"])
+        params_path = str(_config["params_path"])
+        scaler_path = str(_config["scaler_path"])
+
         with open(params_path, 'r') as f:
             params = json.load(f)
         fc_hidden_sizes = _config["architecture_builder"](params)
@@ -239,13 +241,15 @@ def load_model_and_dependencies(model_name, _config):
         st.error(f"Kritisches Problem beim Laden von '{model_name}': {e}")
         return None
 
-# --- MODELLKONFIGURATION (MIT FEHLERANGABEN) ---
-BASE_PATH = '/home/lukas/Masterthesis/pytorch/'
+
+# Nutze den Ordner, in dem die app.py liegt, als Basis-Pfad
+BASE_PATH = Path(__file__).parent.resolve()
+
 MODEL_CONFIGS = {
     "Modell 1: ResNet50 (mit Platin)": {
-        "model_path": os.path.join(BASE_PATH, 'models/resnet50/GPU_1/ex05_ALL2/best_models_final/rank_1_trial_669/model.pth'),
-        "params_path": os.path.join(BASE_PATH, 'models/resnet50/GPU_1/ex05_ALL2/best_models_final/rank_1_trial_669/parameters.json'),
-        "scaler_path": os.path.join(BASE_PATH, 'data/scalers_ALL.pkl'),
+        "model_path": BASE_PATH / 'models/ResNet50_ALL.pth',
+        "params_path": BASE_PATH / 'models/ResNet50_ALL_parameters.json',
+        "scaler_path": BASE_PATH / 'models/scalers_ALL.pkl',
         "compositions": ['A15 Phase', 'Pores','Chromium', 'Silicon', 'Germanium', 'Molybdenum', 'Platinum', 'CrMK'],
         "architecture_builder": lambda p: [p['hidden1'], p['hidden2'], p['hidden2'], p['hidden2']],
         "std_devs": {
@@ -255,9 +259,9 @@ MODEL_CONFIGS = {
         }
     },
     "Modell 2: ResNet50 (ohne Platin)": {
-        "model_path": os.path.join(BASE_PATH, 'models/resnet50/GPU_1/ex04_ALL_noPt/best_models_final/rank_1_trial_2682/model.pth'),
-        "params_path": os.path.join(BASE_PATH, 'models/resnet50/GPU_1/ex04_ALL_noPt/best_models_final/rank_1_trial_2682/parameters.json'),
-        "scaler_path": os.path.join(BASE_PATH, 'data/scalers_noPt.pkl'),
+        "model_path": BASE_PATH / 'models/ResNet50_noPt.pth',
+        "params_path": BASE_PATH / 'models/ResNet50_noPt_parameters.json',
+        "scaler_path": BASE_PATH / 'models/scalers_noPt.pkl',
         "compositions": ['A15 Phase', 'Pores','Chromium', 'Silicon', 'Germanium', 'Molybdenum', 'CrMK'],
         "architecture_builder": lambda p: [p['hidden1'], p['hidden2']],
         "std_devs": {
@@ -267,6 +271,8 @@ MODEL_CONFIGS = {
         }
     }
 }
+
+
 
 
 # --- STREAMLIT OBERFLÄCHE ---
