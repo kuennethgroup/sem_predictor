@@ -380,16 +380,16 @@ with main_col:
                     
                     # 2. DataFrame für die Anzeige erstellen
                     display_df = download_df.copy()
-                    std_devs = active_config.get("std_devs", {})
+                    # std_devs = active_config.get("std_devs", {})
                     
                     # 3. Spaltennamen für die Anzeige formatieren
                     new_column_names = {}
-                    for col in display_df.columns:
-                        if col in std_devs:
-                            error_val, unit = std_devs[col]
-                            new_column_names[col] = f"{col}\n(±{error_val} {unit})"
-                        else:
-                            new_column_names[col] = col
+                    # for col in display_df.columns:
+                    #     if col in std_devs:
+                    #         error_val, unit = std_devs[col]
+                    #         new_column_names[col] = f"{col}\n(±{error_val} {unit})"
+                    #     else:
+                    #         new_column_names[col] = col
                     
                     display_df.rename(columns=new_column_names, inplace=True)
                     
