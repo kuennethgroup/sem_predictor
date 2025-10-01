@@ -3,14 +3,14 @@
 
 [🌐 **Live App Link**](https://sem-predictor.streamlit.app/)
 
-This Streamlit tool enables fast, ML-based analysis of BSE images from Cr-Si alloys developed as part of a Master's thesis. It detects different phases and elements, calculates error margins, and allows CSV data export.
+This Streamlit tool enables fast, ML-based analysis of BSE images from Cr-Si alloys developed as part of a Master's thesis. It calculates different phases and allows CSV data export.
 
 ---
 
 ## 🚀 Features
 
 - 🌍 Multilingual interface (German/English)  
-- 🖼️ Analysis and visualization of phase fractions in BSE images  
+- 🖼️ Analysis of phase fractions in BSE images (Cr-Si-Alloys)
 - ⚙️ Selection and comparison of different ML models (ResNet50)  
 - 📁 Upload of images (PNG, JPG, TIFF, BMP)  
 - 📊 Batch analysis of multiple images with error estimation  
