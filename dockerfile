@@ -1,34 +1,34 @@
 FROM python:3.11-slim
 
-# Arbeitsverzeichnis
-WORKDIR /home/lukas/Masterthesis/app
+# Working directory inside the container
+WORKDIR /app
 
-# Systemabhängigkeiten aktualisieren und installieren + manuelles Upgrade kritischer Bibliotheken
+# Update system dependencies and upgrade critical libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     software-properties-common \
     git \
-    && apt-get upgrade -y libexpat1 libssl3 libffi8  \
+    && apt-get upgrade -y libexpat1 libssl3 libffi8 \
     && rm -rf /var/lib/apt/lists/*
 
-# Python Dependencies kopieren und installieren
-COPY requirements.txt ./
+# Copy requirements.txt and install Python packages
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# App-Code kopieren
-COPY ./ ./
+# Copy application source code and models
+COPY ./ /app/
 
-# Exponiere den Standardport für Streamlit
+# Optional: run Streamlit as a non-root user (recommended for security)
+# RUN useradd -m appuser && chown -R appuser /app
+# USER appuser
+
+# Expose Streamlit port
 EXPOSE 8501
 
-# Gesundheitscheck der Streamlit-App
+# Healthcheck for Streamlit app
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 
-# Führe Streamlit als nicht-root User aus (optional)
-# RUN useradd -m appuser && chown -R appuser /home/lukas/Masterthesis/app
-# USER appuser
-
-# Starte Streamlit
+# Start Streamlit app
 ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
