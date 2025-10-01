@@ -1,0 +1,17 @@
+{
+  "num_fc_layers": 5,
+  "learning_rate": 0.001567711922875267,
+  "weight_decay": 1.0038180168376701e-05,
+  "dropout1": 0.2106102639315995,
+  "dropout2": 0.2705297581528334,
+  "hidden1": 384,
+  "hidden2": 192,
+  "batch_size": 64,
+  "num_epochs": 1000,
+  "patience": 100,
+  "base_lr": 0.001567711922875267,
+  "scheduler_type": "plateau",
+  "optimizer_type": "adam",
+  "beta1": 0.8041874222796327,
+  "beta2": 0.9047245768297295
+}

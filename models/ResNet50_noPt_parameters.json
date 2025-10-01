@@ -1,0 +1,17 @@
+{
+  "num_fc_layers": 3,
+  "learning_rate": 0.018711594522227367,
+  "weight_decay": 9.978269714445302e-05,
+  "dropout1": 0.14846535776756595,
+  "dropout2": 0.22663745932124435,
+  "hidden1": 320,
+  "hidden2": 256,
+  "batch_size": 32,
+  "num_epochs": 1000,
+  "patience": 100,
+  "base_lr": 0.018711594522227367,
+  "scheduler_type": "plateau",
+  "optimizer_type": "sgd_momentum",
+  "beta1": 0.9,
+  "beta2": 0.999
+}
